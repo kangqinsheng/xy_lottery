@@ -1,0 +1,105 @@
+@charset "utf-8";
+body {
+	font-size: 14px;
+	font-family: "Microsoft Yahei", Arial, Helvetica, sans-serif, "宋体";
+	-webkit-text-size-adjust: none;
+}
+a{
+	text-decoration: none;
+}
+a:hover,a:focus{
+	text-decoration: none;
+}
+.cle:after {
+	content: ".";
+	display: block;
+	height: 0;
+	clear: both;
+	visibility: hidden;
+}
+
+.cle {
+	zoom: 1;
+}
+
+.main {
+	width: 80%;
+	overflow: hidden;
+	margin: 0% auto;
+	background: url(../img/lottery_bg.gif);
+	background-size: 100% 100%;
+	border-radius: 15px;
+}
+
+.luck {
+	margin: 5%;
+	overflow: hidden;
+	/*border-right: 1px solid #666;
+	border-top: 1px solid #666;
+	border-bottom: 1px solid #666;;*/
+}
+.zj{
+	text-align: center;
+	line-height: 36px;
+	font-size: 14px;
+	color: #ff1142;
+	display: block;
+}
+.luck li {
+	width: 10%;
+	list-style: none;
+	float: left;
+	height: 80px;
+	line-height: 80px;
+	font-size: 16px;
+	text-align: center;
+	border-left: 1px solid #eee;
+	border-bottom: 1px solid #eee;
+	box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	border-radius: 10px;
+	background: #FFFFFF;
+}
+
+
+
+.start {
+	width: 100%;
+	display: block;
+	color: #fff;
+	text-decoration: none;
+	float: left;
+	text-align: center;
+	font-size: 12px;
+	height: 80px;
+	line-height: 80px;
+	color: #fff;
+	background:url(../img/start.png);
+	background-size: 100% 100%;
+	border-left: 1px solid #eee;
+	border-bottom: 1px solid #eee;
+	box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	border-radius: 10px;
+}
+a{
+	text-decoration: none;
+}
+.start span{
+	display: block;
+	position: relative;
+	top: 30%;
+}
+
+.choose {
+	background: #ff7669 !important;
+}
+.start.yidian{
+	opacity: 0.5;
+	color: #FFFFFF; 
+    text-decoration: none;
+}
+.start:focus{
+	color: #FFFFFF;
+	text-decoration: none;
+}

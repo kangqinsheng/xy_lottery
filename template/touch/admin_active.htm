@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="GBK">
+    <title>抽奖活动管理</title>
+    <link href="http://apps.bdimg.com/libs/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet"/>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script type="text/javascript" src="http://apps.bdimg.com/libs/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+    <!--图片-->
+    <link rel="stylesheet" href="source/plugin/xy_love/template/css/mobile-uploadImg.css">
+    <script src="source/plugin/xy_love/template/js/mobile-uploadCompresserImg.js"></script>
+    <script src="source/plugin/xy_lottery/template/js/mobile-uploadImg.js"></script>
+</head>
+<body>
+    <ul class="nav nav-pills">
+        <li role="presentation" class="active"><a href="#">活动设置</a></li>
+        <li role="presentation"><a href="plugin.php?id=xy_lottery:admin&action=luck_list">中奖列表</a></li>
+    </ul>
+    <div class="active_content">
+        <form id="active_form" action="plugin.php?id=xy_lottery:admin" method="post">
+            <input type="hidden" name="action" value="add_active">
+            <input type="hidden" name="ac_id" id="ac_id" value="{$active_data['id']}">
+            <h3>更新活动</h3>
+            <div>
+                <label>
+                    活动名称：<input name="ac_name" type="text" value="{$active_data['ac_name']}">
+                </label>
+            </div>
+            <div>
+            <label>
+                开始时间：<input name="ac_sday" placeholder="如:20180405" type="text" value="{$active_data['ac_sday']}">
+            </label>
+            </div>
+            <div>
+            <label>
+                结束时间：<input name="ac_eday" placeholder="如:20180405" type="text" value="{$active_data['ac_eday']}">
+            </label>
+            </div>
+            <div>
+            <label>
+                活动规则：<textarea cols="50" rows="10" name="ac_rule">{$active_data['ac_rule']}</textarea>
+            </label>
+            </div>
+            <div>
+            <label>
+                单日免费次数：<input type="number" name="ac_frees" placeholder="正整数" value="{$active_data['ac_frees']}">
+            </label>
+            </div>
+            <div>
+            <label>
+                单日积分抽取次数：<input type="number" name="ac_dtimes" placeholder="正整数" value="{$active_data['ac_dtimes']}">
+            </label>
+            </div>
+            <div>
+            <label>
+                单次消耗积分数：<input type="number" name="ac_integral" placeholder="正整数" value="{$active_data['ac_integral']}">
+            </label>
+            </div>
+            <input type="submit" id="add_active" value="确认修改">
+        </form>
+        <!--{if $active_data['ac_status']==0}-->
+        <div class="btn btn-warning" id="underline">下线</div>
+        <!--{else}-->
+        <div class="btn btn-success" id="online">上线</div>
+        <!--{/if}-->
+    </div>
+    <h3>
+        奖品列表
+    </h3>
+    <div class="prize_list">
+        <table class="table table-hover table-striped">
+            <thead>
+            <tr>
+                <th>
+                    排序
+                </th>
+                <th>
+                    奖品名
+                </th>
+                <th>
+                    奖品图
+                </th>
+                <th>
+                    总量
+                </th>
+                <th>
+                    已中/余量
+                </th>
+                <th>
+                    积分
+                </th>
+                <th>
+                    概率
+                </th>
+                <th>
+                    操作
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            <!--{loop $prize_list $one}-->
+                <tr id="{$one['id']}">
+                    <td>
+                        <input type="number" class="prize_num" value="{$one['prize_num']}">
+                    </td>
+                    <td>
+                        <input type="text" class="prize_name" value="{$one['prize_name']}">
+                    </td>
+                    <td>
+                        <img src="source/plugin/xy_lottery/uploads/{$one['prize_img']}.jpg" width="50px" height="50px">
+                    </td>
+                    <td>
+                        <input type="number" class="prize_count" value="{$one['prize_count']}">
+                    </td>
+                    <td>
+                        {$one['prize_yizhong']}/{$one['prize_shengyu']}
+                    </td>
+                    <td>
+                        <input type="number" class="prize_jifen" value="{$one['prize_jifen']}">
+                    </td>
+                    <td>
+                        <input type="number" class="prize_prob" value="{$one['prize_prob']}">
+                    </td>
+                    <td>
+                        <div class="btn btn-info update" for="{$one['id']}">更新</div>
+                        <div class="btn btn-danger delete" for="{$one['id']}">删除</div>
+                    </td>
+                </tr>
+            <!--{/loop}-->
+            </tbody>
+        </table>
+    </div>
+    <div class="add_prize">
+        <form id="prize_form" action="plugin.php?id=xy_lottery:admin" method="post">
+            <input id="prize1" type="hidden" name="action" value="add_prize">
+            <h3>添加奖品</h3>
+            <!--照片-->
+            <h5 class="mui-content-padded">LOGO:(上传一张图片哟，方的，150px还是可以)</h5>
+            <div class="mui-card">
+                <div class="mui-input-group" style="padding: 10px;">
+                    <div id="uploadImgForm">
+                        <div class="mbupload_frame">
+                            <div class="mbupload_photoList">
+                                <ul>
+                                    <li class="mbupload_on mbupload_addPic mbupload_addImg"></li>
+                                </ul>
+                            </div>
+                            <div class="mbupload_bgimg">
+                                <div class="iconSendImg mbupload_addImg" style="background:url(source/plugin/xy_love/template/images/upload_carbg.png) no-repeat 50% 50%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <label>
+                奖品排序：<input id="prize2" name="prize_num" type="number" placeholder="1-8">
+            </label>
+            <label>
+                奖品名字：<input id="prize3" name="prize_name" type="text">
+            </label>
+            <label>
+                奖品积分：<input id="prize4" name="prize_jifen" type="number" value="0" placeholder="针对奖励积分，（未中奖9999）">
+            </label>
+            <label>
+                奖品总量：<input id="prize5" name="prize_count" type="number" placeholder="请输入正整数允许为0">
+            </label>
+            <label>
+                中奖概率：<input id="prize6" name="prize_prob" type="number" placeholder="综合占比，正整数">
+            </label>
+            <input type="button" id="add_prize" value="确认添加">
+        </form>
+    </div>
+</body>
+<!--图片-->
+<script type="text/javascript">
+    var objUploadImgForm = {};
+    objUploadImgForm.uploadUrl = "plugin.php?id=xy_lottery:img"+""+"&action=add";//上传图片的地址
+    objUploadImgForm.formHtmlId = "#uploadImgForm";//上传图片的ID
+    objUploadImgForm.maxUpload = 1;//上传图片的最大张数
+    objUploadImgForm.uploadMaxW = 2000; //生成图片的最大宽度
+    objUploadImgForm.uploadMaxH = 2000; //生成图片的最大高度
+    objUploadImgForm.uploadQuality = 1; //目标jpg图片输出质量
+    objUploadImgForm.uploadPicSize = 8;//上传限制图片大小(MB)  默认8M
+    objUploadImgForm.uploadPicMore = true;//是否允许多图上传  默认单张上传
+    objUploadImgForm.onceMaxUpload = 10;//多图上传时，一次上传的最大张数 默认10
+    objUploadImgForm.uploadDefaultImgUrl = "source/plugin/xy_love/template/images/defaultImg.png";//压缩图片时的默认图片地址
+    mobileUploadImg(objUploadImgForm);
+</script>
+<script type="text/javascript">
+    $(function(){
+        //表单验证填写
+        $("#add_prize").on("click",function(){
+            if($("#prize1").val()!=""&&$("#prize2").val()!=""&&$("#prize3").val()!=""&&$("#prize4").val()!=""&&$("#prize5").val()!=""&&$("#prize6").val()!=""){
+                $("#prize_form").submit();
+            }else{
+                alert("请填写完整数据");
+            }
+        })
+        //下线活动
+        $("#underline").on("click",function(){
+            if(confirm("确认下线活动？")) {
+                var id = $("#ac_id").val();
+                $.post("plugin.php?id=xy_lottery:ajax", {"ajax": 'underline_active', 'act_id': id}, function (res) {
+                    if (res.status == 200) {
+                        alert("下线成功！");
+                        location.reload();
+                    } else {
+                        alert("网络错误");
+                    }
+                }, 'json')
+            }
+        })
+        //上线活动
+        $("#online").on("click",function(){
+            if(confirm("确认下线活动？")) {
+                var id = $("#ac_id").val();
+                $.post("plugin.php?id=xy_lottery:ajax", {"ajax": 'online_active', 'act_id': id}, function (res) {
+                    if (res.status == 200) {
+                        alert("上线成功！");
+                        location.reload();
+                    } else {
+                        alert("网络错误");
+                    }
+                }, 'json')
+            }
+        })
+        //删除奖品
+        $(".delete").on("click",function(){
+            if(confirm("确定删除商品?")) {
+                var id = $(this).attr("for");
+                $.post("plugin.php?id=xy_lottery:ajax", {"ajax": 'delete_prize', 'act_id': id}, function (res) {
+                    if (res.status == 200) {
+                        alert("删除成功！");
+                        location.reload();
+                    } else {
+                        alert("网络错误");
+                    }
+                }, 'json')
+            }
+        })
+        //更改奖品
+        $(".update").on("click",function(){
+            if(confirm("确定修改商品?")) {
+                var id = $(this).attr("for");
+                var prize_num = $("#" + id + " .prize_num").val();
+                var prize_name = $("#" + id + " .prize_name").val();
+                var prize_count = $("#" + id + " .prize_count").val();
+                var prize_jifen = $("#" + id + " .prize_jifen").val();
+                var prize_prob = $("#" + id + " .prize_prob").val();
+                $.post("plugin.php?id=xy_lottery:ajax", {
+                    "ajax": 'update_prize',
+                    'act_id': id,
+                    'prize_num': prize_num,
+                    'prize_name': prize_name,
+                    'prize_jifen': prize_jifen,
+                    'prize_count': prize_count,
+                    'prize_prob': prize_prob
+                }, function (res) {
+                    if (res.status == 200) {
+                        alert("更新成功！");
+                        location.reload();
+                    } else {
+                        alert("无数据变化");
+                    }
+                }, 'json')
+            }
+        })
+    })
+</script>
+</html>

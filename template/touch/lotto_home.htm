@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<!--<head></head>-->
+<head>
+		<meta charset="GBK">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>幸运九宫格</title>
+		<link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+
+		<link rel="stylesheet" type="text/css" href="source/plugin/xy_lottery/template/css/index.css">
+		<link rel="stylesheet" href="source/plugin/xy_lottery/template/css/style.css" />
+		<style>
+			.stop{
+				-webkit-filter: grayscale(100%);
+				-moz-filter: grayscale(100%);
+				-ms-filter: grayscale(100%);
+				-o-filter: grayscale(100%);
+				filter: grayscale(100%);
+				filter: gray;
+				opacity: 0.8;
+			}
+			.myjp{
+				background: #ff9372;
+				color: #FFFFFF;
+				border-radius: 10px;
+				display: inline;
+				padding: 5px 15px;
+				font-size: 10px;
+				margin: 0px auto 10px auto;
+				line-height: 30px;
+			}
+			.myjp:focus,.myjp:active,.myjp:hover{
+				color: #FFFFFF;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="gonggao">
+			<span class="glyphicon glyphicon-gift" aria-hidden="true"></span>中奖公告：
+		</div>
+		<div id="scrollBox">
+			<ul id="ul1">
+				<!--{loop $luck_data $one}-->
+				<li>恭喜
+					<font>{$one['nick_name']}</font>抽中
+					<font>{$one['prize']}</font>
+				</li>
+				<!--{/loop}-->
+			</ul>
+		</div>
+		<img src="source/plugin/xy_lottery/template/img/banner.png" width="100%"/>
+		<div style="text-align: center; margin-bottom: 10px;">
+			<a href="#" class="zj myjp" data-toggle="modal" data-target="#myModal1">我已抽中的奖品</a>
+		</div>
+		<div class="main" id="main">
+			<ul class="luck" id="luck">
+				<!--{loop $prizes_list $key $value}-->
+				<li id="
+					<!--{eval echo $key+1;}-->
+				">{$value['prize_name']}</li>
+				<!--{/loop}-->
+				<!--{if $active_time_status==0&&$active_status==0&&$user_times>0}-->
+				<a class="start1 start luck_start_btn" href="javascript:void(0);">
+					<!--{if $user_free_times>0}-->
+					<span>免费</span>
+					<!--{/if}-->
+					<!--{if $user_free_times==00&&$user_times>0}-->
+					<span>消耗{$active['ac_integral']}积分</span>
+					<!--{/if}-->
+				</a>
+				<!--{else}-->
+				<a class="start luck_start_btn stop" href="javascript:void(0);">
+					<!--{if $user_times==0}-->
+					<span>次数用完</span>
+					<!--{else}-->
+					<span>活动关闭</span>
+					<!--{/if}-->
+				</a>
+				<!--{/if}-->
+			</ul>
+		</div>
+		<div class="zj">还有
+			<!--{eval echo $user_free_times+$user_times;}-->
+			次抽奖机会</div>
+
+		<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-body">
+						<h4 id="title">恭喜你！</h4> 抽中
+						<font id="yz_pname"></font>
+						<span id="show_lucks">
+							<a class="ljdh" href="#" data-toggle="modal" data-target="#myModal1" data-dismiss="modal" aria-hidden="true">立即兑换</a>
+						</span>
+					</div>
+					<button type="button" class="close" onclick="javascript:location.reload();">
+					&times;
+			</button>
+				</div>
+			</div>
+		</div>
+
+		<div class="modal fade myprize" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-body law">
+						<h4><i></i>我已抽中的奖品<i></i></h4>
+						<!--中奖列表-->
+						<div class="table-responsive">
+							<table class="table">
+								<thead>
+									<tr>
+										<th>中奖时间</th>
+										<th>奖品</th>
+										<th>状态</th>
+									</tr>
+								</thead>
+								<tbody id="lucks_data">
+									<!--{loop $my_data $luck}-->
+									<tr>
+										<td>{$luck['time']}</td>
+										<td>{$luck['prize']}</td>
+										<!--{if $luck['dh_status']==0||$luck['dh_status']<1}-->
+										<td><a class="dh_jp" for="{$luck['id']}">兑换</a></td>
+										<!--{else}-->
+										<td><a href="#" class="active">已兑换</a></td>
+										<!--{/if}-->
+									</tr>
+									<!--{/loop}-->
+								</tbody>
+							</table>
+						</div>
+
+					</div>
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+					&times;</button>
+				</div>
+			</div>
+		</div>
+
+
+		<div class="law">
+			<h4><i></i>抽奖规则<i></i></h4>
+				<p style="color: red;">活动进行中会根据中奖情况调高概率，以达到福利赠送目的</p>
+				<p>1、所有厢遇用户均可参加抽奖</p>
+				<p>2、每天每位用户可抽奖
+					<!--{eval echo $active[ac_frees]+$active['ac_dtimes'];}-->
+					次，前{$active['ac_frees']}次免费，后面{$active['ac_dtimes']}次每次消耗{$active['ac_integral']}积分</p>
+				<p>3、抽中的奖品，可在我的中奖纪录查看，点击<b style="color: red;">“兑换”</b>获取对应积分</p>
+				<!--<p>4、所有实物奖品需现场兑换，积分可直接点击兑换获取；</p>-->
+				<!--<p>5、实物奖品请得到实物后再点击兑换，自行提前兑换概不负责。</p>-->
+				<p style="color: red;">中奖用户分享截图到厢遇圈更有积分奖励</p>
+		</div>
+
+		<script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+
+		<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+		<script>
+			//间歇滚动
+			var area = document.getElementById("scrollBox");
+			var linum = document.getElementById("ul1").getElementsByTagName("li").length;
+			var iHeight = 42;
+			var speed = 50;
+			var delay = 1000;
+			area.scrollTop = 0;
+			var time;
+
+			function startMove() {
+				area.scrollTop++;
+				time = setInterval("scrollUp()", speed);
+			}
+
+			function scrollUp() {
+				area.scrollTop++;
+
+				if(area.scrollTop % iHeight == 0) {
+
+					if(area.scrollTop == (linum - 1) * iHeight) {
+						area.scrollTop = 0;
+					}
+
+					clearInterval(time);
+					setTimeout(startMove, delay);
+
+					//console.log(area.scrollTop);
+				} else {
+					area.scrollTop++;
+					if(area.scrollTop >= area.scrollHeight / 1) {
+						area.scrollTop = 0;
+					}
+				}
+			}
+			setTimeout(startMove, delay);
+		</script>
+		<!--抽奖-->
+		<script type="text/javascript" src="source/plugin/xy_lottery/template/js/luck.1.0.2.min.js"></script>
+		<script type="text/javascript" src="source/plugin/xy_lottery/template/js/index.js"></script>
+	<script>
+        var yi_dian = 0;
+        var luck = new appgame.slotMachines("luck", { //可以设置具体的参数，这里注释了，用默认的
+            x: 3, //横向的个数,默认4
+            y: 3, //竖向的个数,默认3
+            //lap:5,//圈数,默认5(实际会多跑1圈再跑到中奖项,老虎机不会)
+            //speed:50,//每转一格的时间(ms),默认50(老虎机时为整个动画的时间,即:transition-duration)
+            //ease:true,//先慢后快，结束时变慢,默认true(老虎机时为速度效果的速度曲线,即:transition-timing-function)
+            //ratio:4,//变速时，速度的倍数,默认4(九宫格,直)
+            type: 1, //1 圆(元素样式会重置) 2 直 3 老虎机,默认2
+            //effect:1,// 1 循环 2 来回,默认1(九宫格,直)
+            callback: function(prize) { //结束后的回调
+				if($("#"+prize+"").text()=="谢谢参与"){
+                    $("#title").text("很遗憾！");
+                    $("#show_lucks").hide();
+				}
+                $("#yz_pname").text($("#"+prize+"").text());
+                $(".start1").removeClass("yidian");
+                $('#myModal').modal({backdrop: 'static', keyboard: false});
+            }
+        });
+        $(".start1").bind("click", function() {
+            if(yi_dian == 0) {
+                yi_dian = 1;
+                $(this).addClass("yidian");
+                $.post("plugin.php?id=xy_lottery:ajax", {"ajax": 'lotto', 'act_id': {$uid}}, function (res) {
+                    if (res.status == 500) {//出错
+                        alert(res.msg);
+                    } else {//中奖
+                        if (!luck.playing) { //转盘当前没在跑,防止重复点击
+                            luck.getMove(res.jp_index);//固定奖
+                        }
+                    }
+                }, 'json')
+            }
+        });
+        $("body").on("click",".dh_jp",function(){
+            var id = $(this).attr("for");
+            if(confirm("确认兑换？")){
+                $.post("plugin.php?id=xy_lottery:ajax",{"ajax":'dh_lucky','act_id':id},function(res){
+                    if(res.status == 200){
+                        alert("兑换成功！");
+                        location.reload();
+                    }else{
+                        alert("网络错误");
+                    }
+                },'json')
+            }
+        })
+        $('#myModal1').on('hidden.bs.modal', function (e) {
+            location.reload();
+        })
+        $("#show_lucks").on("click",function () {
+            $.post("plugin.php?id=xy_lottery:ajax",{"ajax":'my_lucks','act_id':{$uid}},function(res){
+                if(res){
+                    var txt = "";
+                    for(i=0;i<res.length;i++){
+						txt+="<tr>";
+                        var id = res[i].id,time=res[i].time,name=res[i].prize,dh=res[i].dh_status;
+                        txt+="<td>"+time+"</td>";
+                        txt+="<td>"+name+"</td>";
+                        if(dh == 0||dh<1){
+                            txt+="<td><a class='dh_jp' for="+id+">兑换</a></td>";
+						}else{
+                            txt+="<td><a href='' class='active'>已兑换</a></td>";
+						}
+						txt+="</tr>";
+					}
+					$("#lucks_data").empty().append(txt);
+                }
+            },'json')
+        })
+	</script>
+	</body>
+</html>

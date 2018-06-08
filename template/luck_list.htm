@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="GBK">
+    <title>抽奖中奖管理</title>
+    <link href="http://apps.bdimg.com/libs/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet"/>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script type="text/javascript" src="http://apps.bdimg.com/libs/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+</head>
+<body>
+    <ul class="nav nav-pills">
+        <li role="presentation"><a href="plugin.php?id=xy_lottery:admin&action=active">活动设置</a></li>
+        <li role="presentation" class="active"><a href="#">中奖列表</a></li>
+    </ul>
+    <input id="username" type="text" class="" placeholder="用户昵称"/>
+    <input id="phone" type="text" class="" placeholder="用户电话"/>
+    <input id="prize_name" type="text" class="" placeholder="奖品名称"/>
+    <div id="search" class="btn btn-primary">搜索</div>
+    <div id="reset" class="btn btn-default">取消</div>
+    <table id="searchData" class="table table-hover table-striped">
+        <thead>
+            <tr>
+                <th>中奖人昵称</th>
+                <th>中奖人电话</th>
+                <th>奖品名称</th>
+                <th>中奖时间</th>
+                <th>兑换</th>
+            </tr>
+        </thead>
+        <tbody>
+
+        </tbody>
+    </table>
+    <div class="data_content">
+        <table class="table table-hover table-striped">
+            <tr>
+                <th>中奖人昵称</th>
+                <th>中奖人电话</th>
+                <th>奖品名称</th>
+                <th>中奖时间</th>
+                <th>兑换</th>
+            </tr>
+            <!--{loop $data $one}-->
+            <tr>
+                <td>$one['nick_name']</td>
+                <td>$one['phone']</td>
+                <td>$one['prize_name']</td>
+                <td>$one['luck_time']</td>
+                <td>
+                    <!--{if $one['dh_status']==0}-->
+                    <div class="btn btn-success duihuan" for="{$one['id']}">兑换</div>
+                    <!--{else}-->
+                    <span class="text-danger">已兑换</span>
+                    <!--{/if}-->
+                </td>
+            </tr>
+            <!--{/loop}-->
+        </table>
+    </div>
+    <nav aria-label="Page navigation">
+        <ul class="pagination">
+            <li>
+                <a href="{$firstPageUrl}">
+                    <span aria-hidden="true">首页</span>
+                </a>
+            </li>
+            <li class="previous"><!--{if $page > 1}--><a href="{$prePageUrl}">{lang tom_yaoyiyao:pre_page}</a><!--{else}--><span>{lang tom_yaoyiyao:pre_page}</span><!--{/if}--></li>
+            <li><span>{$page}/{$allPageNum}</span></li>
+            <li class="next">
+                <!--{if $showNextPage == 1}-->
+                <a href="{$nextPageUrl}">{lang tom_yaoyiyao:next_page}</a>
+                <!--{else}-->
+                <span>{lang tom_yaoyiyao:next_page}</span>
+                <!--{/if}-->
+            </li>
+            <li>
+                <a href="{$lastPageUrl}">
+                    <span aria-hidden="true">尾页</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+<div>
+    抽奖总次数：{$times_all}<br/>
+    参与总人数：{$persons_all}<br/>
+    今日总人数：{$persons_all_now}<br/>
+</div>
+</body>
+<script type="text/javascript">
+    $(function (){
+        $('body').on("click",".duihuan",function () {
+            var id = $(this).attr("for");
+            if(confirm("确认兑换？")){
+                $.post("plugin.php?id=xy_lottery:ajax",{"ajax":'dh_lucky','act_id':id},function(res){
+                    if(res.status == 200){
+                        alert("兑换成功！");
+                        $(this).remove();
+                    }else{
+                        alert("网络错误");
+                    }
+                },'json')
+            }
+        })
+        $('#search').on("click",function(){
+            var username = $("#username").val();
+            var phone = $("#phone").val();
+            var prize_name = $("#prize_name").val();
+            $.post("plugin.php?id=xy_lottery:ajax",{"ajax":'search_lucky','act_id':0,'luck_name':username,'luck_phone':phone,'prize_name':prize_name},function(res){
+                if(res.status == 200){
+                    var res = res.result;
+                    var txt = "";
+                    for(i=0;i<res.length;i++){
+                        var id = res[i]['id'];
+                        var cao = "";
+                        if(res[i]['dh_status']==0){
+                            cao+="<div class='btn btn-success duihuan' for="+id+">兑换</div>";
+                        }else if(res[i]['dh_status']==1){
+                            cao+="<span class='text-danger'>已兑换</span>";
+                        }
+                        txt += "<tr>";
+                        txt += "<td>"+res[i]['luck_name']+"</td>";
+                        txt += "<td>"+res[i]['luck_phone']+"</td>";
+                        txt += "<td>"+res[i]['price_name']+"</td>";
+                        txt += "<td>"+res[i]['luck_time']+"</td>";
+                        txt += "<td>"+cao+"</td>";
+                        txt += "</tr>";
+                    }
+                    $("#searchData tbody").empty().append(txt);
+                }else{
+                    alert("没有数据");
+                }
+            },'json')
+        })
+        $("#reset").on("click",function () {
+            $("#username").val("");
+            $("#phone").val("");
+            $("#prize_name").val("");
+            $("#searchData tbody").empty();
+        })
+    })
+</script>
+</html>

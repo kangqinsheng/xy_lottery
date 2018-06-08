@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<root>
+	<item id="Title"><![CDATA[Discuz! Plugin]]></item>
+	<item id="Version"><![CDATA[X3.2]]></item>
+	<item id="Time"><![CDATA[2018-04-25 12:01]]></item>
+	<item id="From"><![CDATA[Discuz! Board (http://localhost/dsrb/)]]></item>
+	<item id="Data">
+		<item id="plugin">
+			<item id="available"><![CDATA[1]]></item>
+			<item id="adminid"><![CDATA[0]]></item>
+			<item id="name"><![CDATA[ÏáÓö×ªÅÌ]]></item>
+			<item id="identifier"><![CDATA[xy_lottery]]></item>
+			<item id="description"><![CDATA[]]></item>
+			<item id="datatables"><![CDATA[]]></item>
+			<item id="directory"><![CDATA[xy_lottery/]]></item>
+			<item id="copyright"><![CDATA[20180420]]></item>
+			<item id="modules"><![CDATA[b:0;]]></item>
+			<item id="version"><![CDATA[1.0]]></item>
+		</item>
+		<item id="version"><![CDATA[X3.2]]></item>
+		<item id="installfile"><![CDATA[install.inc.php]]></item>
+	</item>
+</root>

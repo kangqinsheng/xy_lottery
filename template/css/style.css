@@ -1,0 +1,165 @@
+/*顶部滚动*/
+
+#scrollBox {
+	width: 100%;
+	height: 42px;
+	background: #f2f4f5;
+	overflow: hidden;
+	position: relative;
+}
+.gonggao{
+	position: absolute;
+	top: 0;
+	left: 5px;
+	z-index: 9;
+	line-height: 42px;
+	font-weight: bolder;
+	color: #ff0a43;
+}
+.gonggao span{
+	margin: 0px 5px;
+}
+#scrollBox ul li {
+	list-style-type: none;
+	line-height: 42px;
+	font-size: 14px;
+	height: 42px;
+	width: 100%;
+	padding: 0px 5px 0px 100px;
+	overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: #666;
+}
+#scrollBox ul{
+	margin: 0;
+	padding: 0;
+}
+#scrollBox ul li font{
+	color: #f36331;
+	margin: 0px 3px;
+	padding: 0;
+}
+
+
+.law{
+	margin: 10%;
+}
+.law h4{
+	text-align: center;
+	line-height: 42px;
+	color: #ff1142;
+	font-weight: bold;
+}
+.law h4 i{
+	display: inline-block;
+	width: 10px;
+	height: 2px;
+	background: #ff1142;
+	vertical-align: middle;
+	margin: 5%;
+}
+
+.law p{
+	line-height: 20px;
+}
+
+
+/*模态框弹出*/
+.modal-body{
+	padding: 20px;
+}
+.modal-dialog{
+	position: absolute;
+	text-align: center;
+	top: 50%;
+	left: 50%;
+	width: 80%;
+	margin: 0;
+	transform: translate(-50%,0%);
+}
+.modal.fade .modal-dialog {
+  -webkit-transform: translate(-50%,-20%);
+  -ms-transform: translate(-50%,-20%);
+  -o-transform: translate(-50%,-20%);
+  transform: translate(-50%,-20%);
+  -webkit-transition: -webkit-transform 0.3s ease-out;
+  -moz-transition: -moz-transform 0.3s ease-out;
+  -o-transition: -o-transform 0.3s ease-out;
+  transition: transform 0.3s ease-out;
+}
+.modal.in .modal-dialog {
+  -webkit-transform: translate(-50%,-50%);
+  -ms-transform: translate(-50%,-50%);
+  -o-transform: translate(-50%,-50%);
+  transform: translate(-50%,-50%);
+}
+.modal-content{
+	/*border: #ff1142 1px solid;*/
+}
+.close{
+	position: absolute;
+	font-size: 24px;
+	color: #ff1142;
+	top: 0;
+	right: 5px;
+	opacity: 1;
+}
+.modal-body font{
+	color: #ff1142;
+}
+.modal-body a{
+	display: inline-block;
+	line-height: 30px;
+	color: #ffffff;
+	background: #ff1142;
+	border-radius: 12px;
+	width: 50%;
+	margin-left: 25%;
+	margin-right: 25%;
+}
+.modal-body .ljdh{
+	margin-top: 20px;
+}
+/*我中的奖品*/
+.myprize .modal-dialog{
+	width: 80%;
+	max-height: 80%;
+}
+.table-responsive{
+	height: 80%;
+}
+.myprize .modal-dialog .modal-body{
+	max-height: 80%;
+	padding:0px;
+}
+
+.table-responsive{
+	text-align: center;
+	border: 0;
+}
+.table-responsive .table{
+	width: 100%;
+}
+.table-responsive .tbody tr{
+	margin: 10px 0px;
+}
+.table-responsive .table tr th{
+	text-align: center;
+}
+.table-responsive .table tr td{
+	text-align: center;
+	font-size: 12px;
+	line-height: 30px;
+}
+.table-responsive .table tr td a{
+	width: 100%;
+	margin: 0;
+}
+.table-responsive .table>thead>tr>th{
+	border: 0;
+}
+.active{
+	background: #fff !important;
+	color: #333 !important;
+}
